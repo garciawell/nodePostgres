@@ -16,7 +16,6 @@ class UserController {
 
   async update(req, res) {
     const { email, oldPassword } = req.body;
-    console.log('Garcia', email, oldPassword);
 
     const user = await User.findByPk(req.userId);
 

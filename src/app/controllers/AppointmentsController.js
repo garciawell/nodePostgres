@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { startOfHour, parseISO, isBefore, format } from 'date-fns';
+import { startOfHour, parseISO, isBefore, format, subHours } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import Appointments from '../models/Appointments';
 import User from '../models/User';
@@ -122,6 +122,36 @@ class AppointsmentsController {
     });
 
     return res.json(appointments);
+  }
+
+  async delete(req, res) {
+    const appointmentsToDelete = await Appointments.findByPk(req.params.id);
+
+    if (appointmentsToDelete.user_id !== req.userId) {
+      return res.status(401).json({
+        error: "You don't have permission to calcel this appointments.",
+      });
+    }
+
+    const dateWithSub = subHours(appointmentsToDelete.date, 2);
+
+    if (isBefore(dateWithSub, new Date())) {
+      return res.status(401).json({
+        error: 'You can only cancel appointments 2 hours in advanced',
+      });
+    }
+
+    appointmentsToDelete.canceled_at = new Date();
+
+    await appointmentsToDelete.save();
+
+    return res.json(appointmentsToDelete);
+  }
+
+  async show(req, res) {
+    const appointmentsToShow = await Appointments.findByPk(req.params.id);
+
+    return res.json(appointmentsToShow);
   }
 }
 

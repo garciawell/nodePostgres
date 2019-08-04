@@ -13,7 +13,7 @@ class CancellationMail {
     await Mail.sendMail({
       to: `${appointment.provider.name} <${appointment.provider.email}>`,
       subject: 'Agendamento cancelado',
-      template: 'cancelation',
+      template: 'cancellation',
       content: {
         provider: appointment.provider.name,
         user: appointment.user.name,

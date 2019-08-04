@@ -14,7 +14,7 @@ class CancellationMail {
       to: `${appointment.provider.name} <${appointment.provider.email}>`,
       subject: 'Agendamento cancelado',
       template: 'cancellation',
-      content: {
+      context: {
         provider: appointment.provider.name,
         user: appointment.user.name,
         date: format(

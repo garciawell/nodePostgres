@@ -93,6 +93,12 @@ class AppointsmentsController {
       });
     }
 
+    if (provider_id === req.userId) {
+      return res.status(401).json({
+        error: 'Not permited creating appointment same user',
+      });
+    }
+
     const appointments = await Appointments.create({
       user_id: req.userId,
       provider_id,

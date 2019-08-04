@@ -30,7 +30,7 @@ class Queue {
     jobs.forEach(job => {
       const { bee, handle } = this.queues[job.key];
 
-      bee.proccess(handle);
+      bee.process(handle);
     });
   }
 }

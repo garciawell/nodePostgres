@@ -26,7 +26,7 @@ module.exports = {
         allowNull: true,
       },
       canceled_at: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DATE,
         allowNull: true,
       },
       created_at: {

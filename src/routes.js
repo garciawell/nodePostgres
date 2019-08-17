@@ -9,7 +9,7 @@ import multerConfig from './config/multer';
 import AppointmentsController from './app/controllers/AppointmentsController';
 import ScheduleController from './app/controllers/ScheduleController';
 import NotificationController from './app/controllers/NotificationController';
-import AvaiableController from './app/controllers/AvaiableController';
+import AvailableController from './app/controllers/AvailableController';
 
 import ValidateUserStore from './app/validators/UserStore';
 import ValidateUserUpdate from './app/validators/UserUpdate';
@@ -26,7 +26,7 @@ routes.use(authMiddleware);
 routes.put('/users', ValidateUserUpdate, UserController.update);
 
 routes.get('/providers', ProviderController.index);
-routes.get('/providers/:providerId/avaiable', AvaiableController.index);
+routes.get('/providers/:providerId/available', AvailableController.index);
 
 routes.post(
   '/appointments',

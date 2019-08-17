@@ -5,9 +5,18 @@ import File from '../models/File';
 import CreateAppointmentService from '../services/CreateAppointmentService';
 import CancelAppointmentService from '../services/CancelAppointmentService';
 
+import Cache from '../../lib/Cache';
+
 class AppointsmentsController {
   async index(req, res) {
-    const { page } = req.query;
+    const { page = 1 } = req.query;
+
+    const cacheKey = `user:${req.userId}:appointments:${page}`;
+    const cached = await Cache.get(cacheKey);
+
+    if (cached) {
+      return res.json(cached);
+    }
 
     const appointments = await Appointments.findAll({
       where: {
@@ -33,6 +42,8 @@ class AppointsmentsController {
         },
       ],
     });
+
+    await Cache.set(cacheKey, appointments);
 
     return res.json(appointments);
   }

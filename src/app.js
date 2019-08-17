@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
+import helmet from 'helmet';
 import 'express-async-errors';
 import path from 'path';
 import * as Sentry from '@sentry/node';
@@ -19,6 +20,7 @@ class App {
 
   middlewares() {
     this.server.use(Sentry.Handlers.requestHandler());
+    this.server.use(helmet());
     this.server.use(express.json());
     this.server.use(
       '/files',
